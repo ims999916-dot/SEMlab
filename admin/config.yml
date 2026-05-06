@@ -2,7 +2,8 @@ backend:
   name: github
   repo: ims999916-dot/SEMlab
   branch: main
-
+  base_url: https://sveltia-cms-auth.pages.dev
+  
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
