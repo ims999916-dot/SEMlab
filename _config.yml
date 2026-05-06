@@ -1,0 +1,31 @@
+title: SEMLAB
+description: Smart Energy Mobility Laboratory
+baseurl: "/SEMlab"
+url: "https://ims999916-dot.github.io"
+
+# 빌드 설정
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title/
+
+# 컬렉션 설정
+collections:
+  members:
+    output: true
+    permalink: /members/:name/
+
+# 기본값
+defaults:
+  - scope:
+      path: ""
+      type: "members"
+    values:
+      layout: "member"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# 플러그인
+plugins:
+  - jekyll-feed

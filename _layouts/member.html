@@ -1,0 +1,52 @@
+---
+layout: default
+---
+<style>
+.member-detail { max-width: 700px; margin: 0 auto; padding: 3rem 1.5rem; }
+.member-header { display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; }
+.member-photo {
+  width: 120px; height: 120px; border-radius: 12px;
+  object-fit: cover; background: var(--green-pale);
+  flex-shrink: 0;
+}
+.member-photo-placeholder {
+  width: 120px; height: 120px; border-radius: 12px;
+  background: var(--green-pale); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.5rem; color: var(--green-mid);
+}
+.member-info h1 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--green-dark); margin-bottom: 0.25rem; }
+.member-role { font-size: 0.82rem; color: var(--green-mid); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.member-email a { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; }
+.member-email a:hover { color: var(--green); }
+.member-body { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--green-mid); text-decoration: none; margin-bottom: 2rem; }
+.back-link:hover { color: var(--green); }
+</style>
+
+<div class="member-detail">
+  <a href="{{ site.baseurl }}/members/" class="back-link">← 멤버 목록으로</a>
+
+  <div class="member-header">
+    {% if page.photo %}
+      <img src="{{ site.baseurl }}/assets/images/members/{{ page.photo }}" alt="{{ page.name }}" class="member-photo">
+    {% else %}
+      <div class="member-photo-placeholder">{{ page.name | slice: 0 }}</div>
+    {% endif %}
+    <div class="member-info">
+      <h1>{{ page.name }}</h1>
+      <div class="member-role">{{ page.role }}</div>
+      {% if page.email %}
+        <div class="member-email"><a href="mailto:{{ page.email }}">{{ page.email }}</a></div>
+      {% endif %}
+      {% if page.research %}
+        <div style="margin-top:0.5rem; font-size:0.82rem; color:var(--text-muted);">{{ page.research }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="member-body">
+    {{ content }}
+  </div>
+</div>

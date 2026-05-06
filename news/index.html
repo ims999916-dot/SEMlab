@@ -1,0 +1,61 @@
+---
+layout: default
+title: News
+---
+<style>
+.news-list { display: grid; gap: 0.75rem; }
+.news-card {
+  display: flex; gap: 1.25rem; align-items: flex-start;
+  padding: 1.25rem 1.5rem; background: #fff;
+  border: 1px solid var(--border); border-radius: 12px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.news-card:hover { border-color: var(--green-light); transform: translateY(-2px); }
+.news-date-col { min-width: 80px; text-align: center; flex-shrink: 0; }
+.news-day { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--green-dark); line-height: 1; }
+.news-mon { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.news-divider { width: 1px; background: var(--border); align-self: stretch; flex-shrink: 0; }
+.news-body { flex: 1; }
+.news-cat {
+  display: inline-block; font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--green-pale); color: var(--green-mid); margin-bottom: 0.4rem;
+}
+.news-title { font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1.5; margin-bottom: 0.3rem; }
+.news-excerpt { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+.empty-state { text-align: center; padding: 4rem 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
+</style>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-label">News & Announcements</div>
+    <h1>연구실 소식</h1>
+  </div>
+</div>
+
+<div class="main-content">
+  {% if site.posts.size > 0 %}
+  <div class="news-list">
+    {% for post in site.posts %}
+    <a href="{{ site.baseurl }}{{ post.url }}" class="news-card fade-up">
+      <div class="news-date-col">
+        <div class="news-day">{{ post.date | date: "%d" }}</div>
+        <div class="news-mon">{{ post.date | date: "%b %Y" }}</div>
+      </div>
+      <div class="news-divider"></div>
+      <div class="news-body">
+        <div class="news-cat">{{ post.category | default: "공지" }}</div>
+        <div class="news-title">{{ post.title }}</div>
+        {% if post.excerpt %}
+          <div class="news-excerpt">{{ post.excerpt | strip_html | truncate: 80 }}</div>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">아직 등록된 소식이 없습니다.</div>
+  {% endif %}
+</div>

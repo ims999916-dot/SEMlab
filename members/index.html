@@ -1,0 +1,108 @@
+---
+layout: default
+title: Members
+---
+<style>
+.role-section { margin-bottom: 2.5rem; }
+.role-title { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.members-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.member-card {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.25rem; background: #fff;
+  border: 1px solid var(--border); border-radius: 12px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.member-card:hover { border-color: var(--green-light); transform: translateY(-2px); }
+.member-avatar {
+  width: 52px; height: 52px; border-radius: 10px;
+  background: var(--green-pale); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--green-mid);
+  overflow: hidden;
+}
+.member-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.member-name { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+.member-role-tag { font-size: 0.72rem; color: var(--text-muted); }
+.member-research { font-size: 0.75rem; color: var(--green-mid); margin-top: 0.3rem; }
+@media (min-width: 680px) { .members-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-label">Members</div>
+    <h1>연구실 구성원</h1>
+  </div>
+</div>
+
+<div class="main-content">
+  {% assign sorted_members = site.members | sort: 'order' %}
+
+  {% assign professors = sorted_members | where: "role", "교수" %}
+  {% if professors.size > 0 %}
+  <div class="role-section fade-up">
+    <div class="role-title">Professor</div>
+    <div class="members-grid">
+      {% for member in professors %}
+      <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
+        <div class="member-avatar">
+          {% if member.photo %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
+          {% else %}{{ member.name | slice: 0 }}{% endif %}
+        </div>
+        <div>
+          <div class="member-name">{{ member.name }}</div>
+          <div class="member-role-tag">{{ member.role }}</div>
+          {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign phd = sorted_members | where: "role", "박사과정" %}
+  {% assign masters = sorted_members | where: "role", "석사과정" %}
+  {% assign grads = phd | concat: masters %}
+  {% if grads.size > 0 %}
+  <div class="role-section fade-up">
+    <div class="role-title">Graduate Students</div>
+    <div class="members-grid">
+      {% for member in grads %}
+      <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
+        <div class="member-avatar">
+          {% if member.photo %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
+          {% else %}{{ member.name | slice: 0 }}{% endif %}
+        </div>
+        <div>
+          <div class="member-name">{{ member.name }}</div>
+          <div class="member-role-tag">{{ member.role }}</div>
+          {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% assign undergrads = sorted_members | where: "role", "학부연구생" %}
+  {% if undergrads.size > 0 %}
+  <div class="role-section fade-up">
+    <div class="role-title">Undergraduate Researchers</div>
+    <div class="members-grid">
+      {% for member in undergrads %}
+      <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
+        <div class="member-avatar">
+          {% if member.photo %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
+          {% else %}{{ member.name | slice: 0 }}{% endif %}
+        </div>
+        <div>
+          <div class="member-name">{{ member.name }}</div>
+          <div class="member-role-tag">{{ member.role }}</div>
+          {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>

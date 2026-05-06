@@ -1,0 +1,103 @@
+---
+layout: default
+title: Gallery
+---
+<style>
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--cream);
+  cursor: pointer;
+}
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.gallery-item:hover img { transform: scale(1.04); }
+.gallery-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(transparent, rgba(10,61,46,0.85));
+  color: #fff; font-size: 0.78rem; line-height: 1.4;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+.gallery-item:hover .gallery-caption { transform: translateY(0); }
+.gallery-date { font-size: 0.65rem; color: rgba(255,255,255,0.65); margin-bottom: 2px; }
+
+/* lightbox */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,61,46,0.92);
+  align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 80vh; border-radius: 10px; object-fit: contain; }
+.lightbox-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; cursor: pointer;
+  color: #fff; font-size: 1.5rem; line-height: 1;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: rgba(255,255,255,0.15);
+}
+.empty-state { text-align: center; padding: 4rem 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
+
+@media (min-width: 680px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-label">Gallery</div>
+    <h1>활동 사진</h1>
+  </div>
+</div>
+
+<div class="main-content">
+  {% assign gallery_posts = site.posts | where: "category", "갤러리" %}
+  {% if gallery_posts.size > 0 %}
+  <div class="gallery-grid">
+    {% for item in gallery_posts %}
+    {% if item.image %}
+    <div class="gallery-item fade-up" onclick="openLightbox('{{ site.baseurl }}/assets/images/gallery/{{ item.image }}')">
+      <img src="{{ site.baseurl }}/assets/images/gallery/{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+      <div class="gallery-caption">
+        <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
+        {{ item.title }}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">아직 등록된 사진이 없습니다.</div>
+  {% endif %}
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>

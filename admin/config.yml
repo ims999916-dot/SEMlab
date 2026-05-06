@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: ims999916-dot/SEMlab
+  branch: main
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  # ── 공지/소식 ──
+  - name: "posts"
+    label: "소식 & 공지"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "날짜", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "카테고리"
+        name: "category"
+        widget: "select"
+        options: ["공지", "활동", "수상", "갤러리", "기타"]
+      - { label: "대표 이미지 (갤러리용)", name: "image", widget: "image", required: false }
+      - { label: "내용", name: "body", widget: "markdown" }
+
+  # ── 멤버 ──
+  - name: "members"
+    label: "멤버"
+    folder: "_members"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "이름", name: "name", widget: "string" }
+      - label: "직책/역할"
+        name: "role"
+        widget: "select"
+        options: ["교수", "박사과정", "석사과정", "학부연구생", "졸업생"]
+      - { label: "이메일", name: "email", widget: "string", required: false }
+      - { label: "연구 분야", name: "research", widget: "string", required: false }
+      - { label: "프로필 사진", name: "photo", widget: "image", required: false, media_folder: "/assets/images/members" }
+      - { label: "정렬 순서 (숫자 낮을수록 먼저)", name: "order", widget: "number", default: 10 }
+      - { label: "소개", name: "body", widget: "markdown", required: false }
