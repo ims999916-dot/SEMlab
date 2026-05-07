@@ -2,6 +2,7 @@
 name: 김청훈
 role: 교수
 email: chkim@pcu.ac.kr
+phone: 042-520-5567
 photo: chunghun.jpg
 order: 1
 ---
