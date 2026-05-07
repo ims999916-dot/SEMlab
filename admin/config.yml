@@ -28,7 +28,7 @@ collections:
     label: "멤버"
     folder: "_members"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.name}}"
     fields:
       - { label: "이름", name: "name", widget: "string" }
       - label: "직책/역할"
