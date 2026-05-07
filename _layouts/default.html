@@ -34,8 +34,8 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--green-dark);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: #fff;
+  border-bottom: 1px solid var(--border);
 }
 .nav-inner {
   max-width: 1000px;
@@ -59,7 +59,7 @@ body {
   list-style: none;
 }
 .nav-links a {
-  color: rgba(255,255,255,0.65);
+  color: var(--text-muted);
   text-decoration: none;
   font-size: 0.82rem;
   font-weight: 500;
@@ -70,8 +70,8 @@ body {
 }
 .nav-links a:hover,
 .nav-links a.active {
-  color: #fff;
-  background: rgba(255,255,255,0.08);
+  color: var(--green-dark);
+  background: var(--green-pale);
 }
 .nav-hamburger {
   display: none;
