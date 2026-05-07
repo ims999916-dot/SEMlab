@@ -5,3 +5,9 @@ email: jskim06@pcu.ac.kr
 photo: jinsung.jpg
 order: 2
 ---
+**연구분야**
+
+* 시스템 제어 (System Control)
+* 자율주행 (Autonomous Driving)
+* 데이터 기반 제어 (Data-driven Control)
+* 비선형 시스템 식별 (Nonlinear System Identification)
