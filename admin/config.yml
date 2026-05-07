@@ -4,12 +4,11 @@ backend:
   branch: main
   base_url: https://semlab-auth.2568602.workers.dev
   auth_endpoint: auth
-  
+
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
 collections:
-  # ── 공지/소식 ──
   - name: "posts"
     label: "소식 & 공지"
     folder: "_posts"
@@ -25,7 +24,6 @@ collections:
       - { label: "대표 이미지 (갤러리용)", name: "image", widget: "image", required: false }
       - { label: "내용", name: "body", widget: "markdown" }
 
-  # ── 멤버 ──
   - name: "members"
     label: "멤버"
     folder: "_members"
@@ -39,6 +37,9 @@ collections:
         options: ["교수", "박사과정", "석사과정", "학부연구생", "졸업생"]
       - { label: "이메일", name: "email", widget: "string", required: false }
       - { label: "연구 분야", name: "research", widget: "string", required: false }
+      - { label: "연구실 위치 (예: 자연과학관 J105호)", name: "office", widget: "string", required: false }
+      - { label: "연락처", name: "phone", widget: "string", required: false }
+      - { label: "학력 (예: 배재대학교 전기전자공학과 석사)", name: "degree", widget: "string", required: false }
       - { label: "프로필 사진", name: "photo", widget: "image", required: false, media_folder: "/assets/images/members", public_folder: "" }
       - { label: "정렬 순서 (숫자 낮을수록 먼저)", name: "order", widget: "number", default: 10 }
-      - { label: "소개", name: "body", widget: "markdown", required: false }
+      - { label: "상세 소개 (경력, 논문 등 자유 입력)", name: "body", widget: "markdown", required: false }
