@@ -5,8 +5,6 @@ email: chkim@pcu.ac.kr
 photo: chunghun.jpg
 order: 1
 ---
-
-
 #### 학력사항
 
 * 한양대학교 공학석박사통합과정(시스템 제어 전공)
@@ -23,7 +21,7 @@ order: 1
 * 2018. 3~2019. 2 경북대학교 박사후 연구원
 * 2017. 3~2017. 12 한양대학교 학부 강사
 * 2016. 12~2017. 2 미국국립신재생연구소 Visitng Professional (Golden, Colorado, US)
-* 2011 ~ 현재 IEEE PES/PELS/CSS member
+* 2011 ~ 현재 IEEE PES/PELS/CSS membe
 
 #### 논문
 
@@ -36,9 +34,10 @@ order: 1
 * Enhanced Low-Voltage Ride-Through Coordinated Control for PMSG Wind Turbines and Energy Storage Systems Considering Pitch and Inertia Response, IEEE ACCESS, 2020.
 * Coordinated Fuzzy-Based Low-Voltage Ride-Through Control for PMSG Wind Turbines and Energy Storage Systems, IEEE ACCESS, 2020.
 * Coordinated LVRT Control for a Permanent Magnet Synchronous Generator Wind Turbine with Energy Storage System, APPLIED SCIENCES-BASEL, 2020.
-* 2016. 10 Improved low-voltage ride through capability for PMSG wind turbine based on port-controlled hamiltonian system
+
+  2016. 10 Improved low-voltage ride through capability for PMSG wind turbine based on port-controlled hamiltonian system
 
 #### 저역서
 
 * 2017. 04 Maximum power pooin tracking of a wind power plant with predictive gradient ascent method
-* 2015. 04 Robust nonlinear control of STATCOMs, Springer book chapter in Static compensators (STATCOMs) in power systems.
+  2018. 04 Robust nonlinear control of STATCOMs, Springer book chapter in Static compensators (STATCOMs) in power systems.
