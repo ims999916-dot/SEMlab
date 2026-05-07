@@ -6,11 +6,11 @@ phone: 042-520-5374
 photo: jinsung.jpg
 order: 2
 ---
-
-
 #### 학력사항
 
 * 한양대학교 공학박사(전기공학 전공)
+
+
 
 #### 경력 및 활동
 
@@ -20,12 +20,16 @@ order: 2
 * IEEE Control System Society Member
 * IEEE Intelligent Transportation Systems Society Member
 
+
+
 #### 주요연구분야
 
 * 시스템 제어 (System Control)
 * 자율주행 (Autonomous Driving)
 * 데이터 기반 제어 (Data-driven Control)
 * 비선형 시스템 식별 (Nonlinear System Identification)
+
+
 
 #### 논문
 
@@ -46,10 +50,14 @@ order: 2
 * D.J. Kim, J. S. Kim, J.H.Yang,S.C.Kee, and C.C.Chung, “Lane change intention classication of surroundingvehicles utilizing open set recognition,” IEEE Access, vol. 9, pp. 57589-57602,2021.
 * S. W. Kim, Y. W.Jeong, J. S. Kim, S.-H. Lee, and C.C. Chung, “Estimation of vertical load variation on a tire using unscentedkalman lter,” Transactions of the Korean Society of Automotive Engineers, vol.28, no. 1, pp. 43-52, 2020.
 
+
+
 #### 수상실적
 
 * Outstanding Student Paper Award at 2022 International Conference on Control, Automation and Systems
 * HY-Innovation Awards at Hanyang University Technology Commercialization Center
+
+
 
 #### 특허 및 지적재산권
 
@@ -62,7 +70,6 @@ order: 2
 * I. J. Um, J. H. Kang, J. Park, and M. D. Kim, C. C. Chung, S.-H. Lee, D. J. Kim, J. S. Kim, "Road surface recognition apparatus, vehicle having the same, and method of controlling vehicle," Mar. 17, 2022, Patent No. US12214775B2, US Patent.
 * J. W. Seo, J. S. Kim, D. J. Kim, and C. C. Chung, "Method and apparatus for classifying road surface conditions by area of driving roads using artificial neural network," July 20, 2021, Granted Patent No. 10-2403178, Korea Patent.
 * S. H. Chung, J. S. Kim, D. J. Kim, and C. C. Chung, "Method and apparatus for determining the possibility of collision of a driving vehicle using an artificial neural network," July 20, 2021, Granted Patent No. 10-2602271, Korea Patent.
-
 * J. S. Kim, J. Y. Choi, and C. C. Chung, "Lane estimation method and apparatus using deep neural network," June 30, 2020, Granted Patent No. 10-2427366, Korea Patent.
 * J. S. Kim, D. J. Kim, I. J. Um, J. H. Kang, J. H. Park, M. D. Kim, S.-H. Lee, and C. C. Chung, "Vehicle and method for controlling the vehicle," September 11, 2020, Application Patent No. 10-2020-0116952, Korea Patent.
 * J. S. Kim, D. J. Kim, and C. C. Chung, Road classication method and apparatus, September 11, 2020, Application Patent No. 10-2019-0099773, Korea Patent.
