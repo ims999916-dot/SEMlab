@@ -202,7 +202,9 @@ body {
 
 <nav class="site-nav">
   <div class="nav-inner">
-    <a href="{{ site.baseurl }}/" class="nav-logo">SEMLAB</a>
+    <a href="{{ site.baseurl }}/" class="nav-logo">
+      <img src="{{ site.baseurl }}/assets/images/semlab-logo.png" alt="SEMLAB" style="height:32px; width:auto; display:block;">
+    </a>
     <ul class="nav-links">
       <li><a href="{{ site.baseurl }}/" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
       <li><a href="{{ site.baseurl }}/members/" {% if page.url contains 'members' %}class="active"{% endif %}>Members</a></li>
