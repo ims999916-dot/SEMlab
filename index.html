@@ -33,6 +33,7 @@ title: Home
   padding: 3rem 1.5rem 2rem;
   max-width: 1000px; margin: 0 auto; width: 100%;
 }
+.hero-logo { width: 80px; height: auto; margin-bottom: 1.5rem; opacity: 0.95; }
 .hero-label {
   font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--green-light);
@@ -51,12 +52,19 @@ title: Home
   border-left: 2px solid var(--green); padding-left: 1rem;
   max-width: 460px;
 }
+.hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .hero-cta {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   padding: 1rem 1.5rem; background: var(--green); color: #fff;
   border-radius: 999px; text-decoration: none;
   font-size: 0.95rem; font-weight: 500; min-height: 52px;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent; border: none; cursor: pointer;
+  font-family: inherit;
+}
+.hero-cta.outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.85);
 }
 .hero-cta svg { width: 16px; height: 16px; }
 .hero-footer {
@@ -68,12 +76,10 @@ title: Home
 .hero-stat .s-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; }
 .hero-stat .s-val { font-size: 0.82rem; color: rgba(255,255,255,0.85); font-weight: 500; margin-top: 3px; }
 
-/* sections */
 .home-section { padding: 3.5rem 1.5rem; }
 .home-section-inner { max-width: 1000px; margin: 0 auto; }
 .cream { background: var(--cream); }
 
-/* research cards */
 .research-cards {
   display: grid; grid-template-columns: 1fr;
   gap: 1px; background: var(--border);
@@ -87,7 +93,6 @@ title: Home
 .r-items li:last-child { border-bottom: none; }
 .r-items li::before { content: ''; position: absolute; left: 0; top: 0.95rem; width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
 
-/* news preview */
 .news-grid { display: grid; gap: 0.75rem; }
 .news-card {
   display: flex; gap: 1rem; align-items: flex-start;
@@ -106,14 +111,12 @@ title: Home
   background: var(--green-pale); color: var(--green-mid); margin-bottom: 0.3rem;
 }
 
-/* members preview */
 .members-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
 .member-card {
   display: flex; gap: 0.75rem; align-items: center;
   padding: 1rem; background: #fff;
   border: 1px solid var(--border); border-radius: 12px;
-  text-decoration: none; color: inherit;
-  transition: border-color 0.2s;
+  text-decoration: none; color: inherit; transition: border-color 0.2s;
 }
 .member-card:hover { border-color: var(--green-light); }
 .member-avatar {
@@ -127,7 +130,6 @@ title: Home
 .member-card-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
 .member-card-role { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
 
-/* more link */
 .more-link {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 0.82rem; font-weight: 500; color: var(--green-mid);
@@ -135,61 +137,153 @@ title: Home
 }
 .more-link:hover { color: var(--green); }
 
-/* mentor */
-.mentor-quote {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(1.1rem, 3.5vw, 1.6rem);
-  color: var(--green-dark); line-height: 1.5;
-  margin-bottom: 2rem; padding: 1.25rem;
-  border-left: 3px solid var(--green);
-  background: var(--green-pale); border-radius: 0 12px 12px 0;
+/* ── 협약업체 ── */
+.partners-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.partner-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.75rem; padding: 1.5rem 2rem;
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s, transform 0.15s;
+  min-width: 160px; flex: 1;
 }
-.benefit-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
-.b-card { padding: 1.25rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; display: flex; gap: 1rem; align-items: flex-start; }
-.b-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.b-icon svg { width: 18px; height: 18px; stroke: var(--green-mid); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.b-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }
-.b-text p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+.partner-card:hover { border-color: var(--green-light); transform: translateY(-2px); }
+.partner-logo { max-height: 48px; max-width: 140px; object-fit: contain; }
+.partner-name { font-size: 0.78rem; color: var(--text-muted); text-align: center; }
 
-/* cta */
+/* ── 팝업 ── */
+.popup-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,61,46,0.6);
+  align-items: center; justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(4px);
+}
+.popup-overlay.open { display: flex; }
+.popup-box {
+  background: var(--warm-white); border-radius: 20px;
+  max-width: 520px; width: 100%; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.popup-header {
+  background: var(--green-dark); padding: 1.5rem 1.5rem 1.25rem;
+  position: relative;
+}
+.popup-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-light); margin-bottom: 0.5rem; }
+.popup-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; line-height: 1.3; }
+.popup-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: rgba(255,255,255,0.1); border: none; cursor: pointer;
+  color: #fff; width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.popup-body { padding: 1.5rem; }
+.popup-quote {
+  font-size: 0.88rem; color: var(--green-mid); font-style: italic;
+  border-left: 2px solid var(--green); padding-left: 0.75rem;
+  margin-bottom: 1.25rem; line-height: 1.7;
+}
+.popup-info { display: grid; gap: 0; margin-bottom: 1.25rem; }
+.popup-row {
+  display: flex; gap: 0.75rem; font-size: 0.85rem;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+}
+.popup-row:last-child { border-bottom: none; }
+.popup-label { color: var(--text-muted); min-width: 72px; flex-shrink: 0; }
+.popup-val { color: var(--text); }
+.popup-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.popup-btn {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.85rem; border-radius: 10px; font-size: 0.88rem; font-weight: 500;
+  text-decoration: none; border: none; cursor: pointer; font-family: inherit;
+}
+.popup-btn.primary { background: var(--green); color: #fff; }
+.popup-btn.secondary { background: var(--green-pale); color: var(--green-mid); }
+.popup-no-show {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; color: var(--text-muted);
+  margin-top: 1rem; cursor: pointer; justify-content: center;
+}
+
 .cta-section { background: var(--green); padding: 3rem 1.5rem; text-align: center; }
 .cta-section p { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin: 0 auto 1.75rem; line-height: 1.8; }
-.cta-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 1rem 2rem; background: #fff; color: var(--green-mid); border-radius: 999px; text-decoration: none; font-size: 0.95rem; font-weight: 600; min-height: 52px; }
+.cta-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 1rem 2rem; background: #fff; color: var(--green-mid);
+  border-radius: 999px; text-decoration: none; font-size: 0.95rem; font-weight: 600;
+  min-height: 52px; border: none; cursor: pointer; font-family: inherit;
+}
 
-/* fade */
 .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
 @media (min-width: 680px) {
   .hero-body { padding: 5rem 3rem; }
+  .hero-logo { width: 100px; }
   .hero-cta { width: fit-content; }
   .hero-footer { grid-template-columns: repeat(3, auto); padding: 1.5rem 3rem; gap: 2.5rem; }
   .home-section { padding: 5rem 3rem; }
   .research-cards { grid-template-columns: 1fr 1fr; }
   .r-card { padding: 2rem; }
-  .benefit-grid { grid-template-columns: repeat(3, 1fr); }
-  .b-card { flex-direction: column; }
   .members-row { grid-template-columns: repeat(4, 1fr); }
   .cta-section { padding: 4rem 3rem; }
 }
 </style>
 
+<!-- 학부연구생 모집 팝업 -->
+<div class="popup-overlay" id="recruitPopup">
+  <div class="popup-box">
+    <div class="popup-header">
+      <button class="popup-close" onclick="closePopup()">✕</button>
+      <div class="popup-badge">2025 학부연구생 모집</div>
+      <div class="popup-title">SEMLAB과 함께<br>미래를 설계하세요</div>
+    </div>
+    <div class="popup-body">
+      <div class="popup-quote">"좋은 태도는 좋은 연구의 시작입니다."</div>
+      <div class="popup-info">
+        <div class="popup-row"><span class="popup-label">지원 대상</span><span class="popup-val">본교 학부생 (2학년 이상 권장)</span></div>
+        <div class="popup-row"><span class="popup-label">모집 인원</span><span class="popup-val">0명</span></div>
+        <div class="popup-row"><span class="popup-label">지원 방법</span><span class="popup-val">이메일 또는 방문 상담</span></div>
+        <div class="popup-row"><span class="popup-label">위치</span><span class="popup-val">자연과학관 J105호</span></div>
+      </div>
+      <div class="popup-btns">
+        <a href="mailto:2668602@pcu.ac.kr" class="popup-btn primary">이메일로 지원하기</a>
+        <button class="popup-btn secondary" onclick="closePopup()">나중에 보기</button>
+      </div>
+      <label class="popup-no-show">
+        <input type="checkbox" id="noShowCheck" onchange="handleNoShow()">
+        오늘 하루 보지 않기
+      </label>
+    </div>
+  </div>
+</div>
+
 <!-- HERO -->
 <div class="hero">
   <div class="hero-grid-lines"></div>
   <div class="hero-body">
+    <img src="{{ site.baseurl }}/assets/images/semlab-logo.png" alt="SEMLAB 로고" class="hero-logo">
     <div class="hero-label">Smart Energy Mobility Laboratory</div>
     <h1 class="hero-title">에너지를 만들고,<br><em>저장하고, 제어하며</em><br>미래를 설계합니다.</h1>
     <p class="hero-tagline">신재생 에너지 시스템과 자율주행 모빌리티를 융합하여 <br>미래의 스마트 에너지를 연구하는 공간입니다.</p>
-    <a href="mailto:2668602@pcu.ac.kr" class="hero-cta">
-      학부연구생 지원하기
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </a>
+    <div class="hero-btns">
+      <a href="{{ site.baseurl }}/members/" class="hero-cta">
+        연구실 소개
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <button class="hero-cta outline" onclick="openPopup()">학부연구생 모집</button>
+    </div>
   </div>
   <div class="hero-footer">
-    <div class="hero-stat"><div class="s-label">지원 대상</div><div class="s-val">본교 학부생 2학년 이상</div></div>
     <div class="hero-stat"><div class="s-label">연구 분야</div><div class="s-val">신재생 에너지 · AI 모빌리티</div></div>
     <div class="hero-stat"><div class="s-label">위치</div><div class="s-val">자연과학관 J105호</div></div>
+    <div class="hero-stat"><div class="s-label">연락처</div><div class="s-val">2668602@pcu.ac.kr</div></div>
   </div>
 </div>
 
@@ -232,10 +326,10 @@ title: Home
       <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
         <div class="member-avatar">
           {% if member.photo %}
-            <img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
-          {% else %}
-            {{ member.name | slice: 0 }}
-          {% endif %}
+            {% if member.photo contains '/' %}<img src="{{ member.photo }}" alt="{{ member.name }}">
+            {% else %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
+            {% endif %}
+          {% else %}{{ member.name | slice: 0 }}{% endif %}
         </div>
         <div>
           <div class="member-card-name">{{ member.name }}</div>
@@ -268,31 +362,77 @@ title: Home
   </div>
 </div>
 
-<!-- WHY JOIN -->
+<!-- 협약업체 -->
 <div class="home-section">
   <div class="home-section-inner">
-    <div class="s-label-tag fade-up">Why Join Us</div>
-    <h2 class="s-title fade-up">처음부터 전문가일<br>필요는 없습니다</h2>
-    <div class="mentor-quote fade-up">"좋은 태도는 좋은 연구의 시작입니다."</div>
-    <div class="benefit-grid fade-up">
-      <div class="b-card">
-        <div class="b-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-        <div class="b-text"><h4>체계적인 멘토링</h4><p>Python, MATLAB, CYME 등 연구 툴과 <br>전력·제어공학 기초를 선배와 함께 배워나갑니다.</p></div>
-      </div>
-      <div class="b-card">
-        <div class="b-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div class="b-text"><h4>실전 경험</h4><p>시뮬레이션 환경 구축과 알고리즘 설계에 <br>직접 참여하며 실무 역량을 키웁니다.</p></div>
-      </div>
-      <div class="b-card">
-        <div class="b-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
-        <div class="b-text"><h4>학술 활동 지원</h4><p>국내외 학술대회 참관 및 논문 작성 기회로 <br>대학원 진학 전 탄탄한 포트폴리오를 쌓습니다.</p></div>
-      </div>
+    <div class="s-label-tag fade-up">Partners</div>
+    <h2 class="s-title fade-up">협약 기업</h2>
+    <div class="partners-grid fade-up">
+
+      <!-- DY이노베이트 -->
+      <a href="https://innovate.dy.co.kr/kr" target="_blank" rel="noopener" class="partner-card">
+        <img src="{{ site.baseurl }}/assets/images/DYlogo.png" alt="DY이노베이트" class="partner-logo">
+        <div class="partner-name">DY이노베이트</div>
+      </a>
+
+      <!--
+        협약업체 추가 방법:
+        아래 블록을 복사해서 위에 붙여넣고
+        URL, 로고 파일명, 업체명만 수정하세요.
+        로고 파일은 assets/images/ 폴더에 먼저 업로드하세요.
+
+        <a href="업체URL" target="_blank" rel="noopener" class="partner-card">
+          <img src="{{ site.baseurl }}/assets/images/로고파일명.png" alt="업체명" class="partner-logo">
+          <div class="partner-name">업체명</div>
+        </a>
+      -->
+
     </div>
   </div>
 </div>
 
 <!-- CTA -->
 <div class="cta-section">
-  <p>미래 에너지와 모빌리티 기술을 직접 설계해 보고 싶은<br>열정 있는 학생들의 많은 지원 바랍니다.</p>
-  <a href="mailto:2668602@pcu.ac.kr" class="cta-btn">지금 지원하기 →</a>
+  <p>미래 에너지와 모빌리티 기술을 함께 연구할<br>열정 있는 학생들의 많은 지원 바랍니다.</p>
+  <button class="cta-btn" onclick="openPopup()">학부연구생 모집 안내 →</button>
 </div>
+
+<script>
+function openPopup() {
+  document.getElementById('recruitPopup').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePopup() {
+  document.getElementById('recruitPopup').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleNoShow() {
+  var today = new Date().toISOString().slice(0,10);
+  if (document.getElementById('noShowCheck').checked) {
+    localStorage.setItem('recruitPopupHide', today);
+  } else {
+    localStorage.removeItem('recruitPopupHide');
+  }
+}
+document.getElementById('recruitPopup').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePopup();
+});
+window.addEventListener('load', function() {
+  var today = new Date().toISOString().slice(0,10);
+  if (localStorage.getItem('recruitPopupHide') !== today) {
+    setTimeout(openPopup, 1000);
+  }
+});
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
