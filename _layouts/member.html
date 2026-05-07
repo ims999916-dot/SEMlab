@@ -30,7 +30,7 @@ layout: default
 
   <div class="member-header">
     {% if page.photo %}
-      <img src="{{ site.baseurl }}/assets/images/members/{{ page.photo }}" alt="{{ page.name }}" class="member-photo">
+      <img src="{% if page.photo contains '/' %}{{ page.photo }}{% else %}{{ site.baseurl }}/assets/images/members/{{ page.photo }}{% endif %}" alt="{{ page.name }}" class="member-photo">
     {% else %}
       <div class="member-photo-placeholder">{{ page.name | slice: 0 }}</div>
     {% endif %}
