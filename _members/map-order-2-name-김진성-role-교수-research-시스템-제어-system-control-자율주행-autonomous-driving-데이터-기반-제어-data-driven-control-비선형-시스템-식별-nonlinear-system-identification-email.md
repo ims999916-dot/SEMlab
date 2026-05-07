@@ -3,6 +3,7 @@ name: 김진성
 role: 교수
 email: jskim06@pcu.ac.kr
 research: ""
+photo: jinsung.jpg
 order: 2
 ---
 * **연구 분야**\
