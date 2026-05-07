@@ -39,6 +39,6 @@ collections:
         options: ["교수", "박사과정", "석사과정", "학부연구생", "졸업생"]
       - { label: "이메일", name: "email", widget: "string", required: false }
       - { label: "연구 분야", name: "research", widget: "string", required: false }
-      - { label: "프로필 사진", name: "photo", widget: "image", required: false, media_folder: "/assets/images/members" }
+      - { label: "프로필 사진", name: "photo", widget: "image", required: false, media_folder: "/assets/images/members", public_folder: "" }
       - { label: "정렬 순서 (숫자 낮을수록 먼저)", name: "order", widget: "number", default: 10 }
       - { label: "소개", name: "body", widget: "markdown", required: false }
