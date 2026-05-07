@@ -2,51 +2,124 @@
 layout: default
 ---
 <style>
-.member-detail { max-width: 700px; margin: 0 auto; padding: 3rem 1.5rem; }
-.member-header { display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; }
-.member-photo {
-  width: 120px; height: 120px; border-radius: 12px;
-  object-fit: cover; background: var(--green-pale);
-  flex-shrink: 0;
+.member-wrap { max-width: 800px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.82rem; color: var(--green-mid); text-decoration: none; margin-bottom: 2rem;
 }
-.member-photo-placeholder {
-  width: 120px; height: 120px; border-radius: 12px;
-  background: var(--green-pale); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Serif Display', serif;
-  font-size: 2.5rem; color: var(--green-mid);
-}
-.member-info h1 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--green-dark); margin-bottom: 0.25rem; }
-.member-role { font-size: 0.82rem; color: var(--green-mid); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.member-email a { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; }
-.member-email a:hover { color: var(--green); }
-.member-body { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; }
-.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--green-mid); text-decoration: none; margin-bottom: 2rem; }
 .back-link:hover { color: var(--green); }
+
+/* 상단 프로필 카드 */
+.profile-card {
+  display: flex; gap: 2rem; align-items: flex-start;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.profile-photo {
+  width: 140px; height: 180px; border-radius: 10px;
+  background: var(--green-pale); flex-shrink: 0;
+  overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+.profile-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.profile-initial { font-family: 'DM Serif Display', serif; font-size: 3.5rem; color: var(--green-mid); }
+.profile-info { flex: 1; min-width: 200px; }
+.profile-name { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--green-dark); margin-bottom: 0.3rem; }
+.profile-role {
+  display: inline-block; font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px;
+  background: var(--green-pale); color: var(--green-mid); margin-bottom: 1rem;
+}
+.profile-meta-grid { display: grid; gap: 0.5rem; }
+.profile-meta-row {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  font-size: 0.85rem; padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.profile-meta-row:last-child { border-bottom: none; }
+.meta-label { color: var(--text-muted); min-width: 70px; flex-shrink: 0; font-size: 0.78rem; }
+.meta-val { color: var(--text); line-height: 1.5; }
+.meta-val a { color: var(--green-mid); text-decoration: none; }
+
+/* 섹션 */
+.detail-section { margin-bottom: 2rem; }
+.detail-section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem; color: var(--green-dark);
+  margin-bottom: 1rem; padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--green-pale);
+}
+.detail-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.9; }
+.detail-body ul { padding-left: 1.25rem; }
+.detail-body li { margin-bottom: 0.4rem; }
+.detail-body h2 { font-size: 1rem; font-weight: 600; color: var(--green-dark); margin: 1.25rem 0 0.5rem; }
+.detail-body h3 { font-size: 0.92rem; font-weight: 600; color: var(--text); margin: 1rem 0 0.4rem; }
+.detail-body p { margin-bottom: 0.75rem; }
+
+@media (max-width: 560px) {
+  .profile-photo { width: 100px; height: 130px; }
+  .profile-name { font-size: 1.5rem; }
+}
 </style>
 
-<div class="member-detail">
+<div class="member-wrap">
   <a href="{{ site.baseurl }}/members/" class="back-link">← 멤버 목록으로</a>
 
-  <div class="member-header">
-    {% if page.photo %}
-      <img src="{% if page.photo contains '/' %}{{ page.photo }}{% else %}{{ site.baseurl }}/assets/images/members/{{ page.photo }}{% endif %}" alt="{{ page.name }}" class="member-photo">
-    {% else %}
-      <div class="member-photo-placeholder">{{ page.name | slice: 0 }}</div>
-    {% endif %}
-    <div class="member-info">
-      <h1>{{ page.name }}</h1>
-      <div class="member-role">{{ page.role }}</div>
-      {% if page.email %}
-        <div class="member-email"><a href="mailto:{{ page.email }}">{{ page.email }}</a></div>
+  <div class="profile-card">
+    <div class="profile-photo">
+      {% if page.photo %}
+        {% if page.photo contains '/' %}
+          <img src="{{ page.photo }}" alt="{{ page.name }}">
+        {% else %}
+          <img src="{{ site.baseurl }}/assets/images/members/{{ page.photo }}" alt="{{ page.name }}">
+        {% endif %}
+      {% else %}
+        <div class="profile-initial">{{ page.name | slice: 0 }}</div>
       {% endif %}
-      {% if page.research %}
-        <div style="margin-top:0.5rem; font-size:0.82rem; color:var(--text-muted);">{{ page.research }}</div>
-      {% endif %}
+    </div>
+
+    <div class="profile-info">
+      <div class="profile-name">{{ page.name }}</div>
+      <div class="profile-role">{{ page.role }}</div>
+      <div class="profile-meta-grid">
+        {% if page.research %}
+        <div class="profile-meta-row">
+          <span class="meta-label">연구 분야</span>
+          <span class="meta-val">{{ page.research }}</span>
+        </div>
+        {% endif %}
+        {% if page.email %}
+        <div class="profile-meta-row">
+          <span class="meta-label">E-mail</span>
+          <span class="meta-val"><a href="mailto:{{ page.email }}">{{ page.email }}</a></span>
+        </div>
+        {% endif %}
+        {% if page.office %}
+        <div class="profile-meta-row">
+          <span class="meta-label">연구실</span>
+          <span class="meta-val">{{ page.office }}</span>
+        </div>
+        {% endif %}
+        {% if page.phone %}
+        <div class="profile-meta-row">
+          <span class="meta-label">연락처</span>
+          <span class="meta-val">{{ page.phone }}</span>
+        </div>
+        {% endif %}
+        {% if page.degree %}
+        <div class="profile-meta-row">
+          <span class="meta-label">학력</span>
+          <span class="meta-val">{{ page.degree }}</span>
+        </div>
+        {% endif %}
+      </div>
     </div>
   </div>
 
-  <div class="member-body">
-    {{ content }}
+  {% if content != "" and content != "<p></p>" %}
+  <div class="detail-section">
+    <div class="detail-body">{{ content }}</div>
   </div>
+  {% endif %}
 </div>
