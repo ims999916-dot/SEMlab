@@ -43,19 +43,6 @@ title: Members
 }
 .empty-state { text-align: center; padding: 4rem 1.5rem; color: var(--text-muted); }
 
-{% assign member_photo = "" %}
-{% macro member_photo_tag member %}
-  {% if member.photo %}
-    {% if member.photo contains '/' %}
-      <img src="{{ member.photo }}" alt="{{ member.name }}">
-    {% else %}
-      <img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
-    {% endif %}
-  {% else %}
-    <div class="member-initial">{{ member.name | slice: 0 }}</div>
-  {% endif %}
-{% endmacro %}
-
 @media (min-width: 680px) {
   .members-grid { grid-template-columns: repeat(2, 1fr); }
   .member-photo-wrap { width: 80px; height: 100px; }
