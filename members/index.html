@@ -4,28 +4,62 @@ title: Members
 ---
 <style>
 .role-section { margin-bottom: 2.5rem; }
-.role-title { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-.members-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.role-title {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--green-mid);
+  margin-bottom: 1rem; padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.members-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 .member-card {
-  display: flex; gap: 1rem; align-items: flex-start;
-  padding: 1.25rem; background: #fff;
+  display: flex; gap: 1.5rem; align-items: flex-start;
+  padding: 1.5rem; background: #fff;
   border: 1px solid var(--border); border-radius: 12px;
   text-decoration: none; color: inherit;
   transition: border-color 0.2s, transform 0.15s;
 }
 .member-card:hover { border-color: var(--green-light); transform: translateY(-2px); }
-.member-avatar {
-  width: 52px; height: 52px; border-radius: 10px;
+.member-photo-wrap {
+  width: 90px; height: 110px; border-radius: 8px;
   background: var(--green-pale); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--green-mid);
-  overflow: hidden;
+  overflow: hidden; display: flex; align-items: center; justify-content: center;
 }
-.member-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.member-name { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
-.member-role-tag { font-size: 0.72rem; color: var(--text-muted); }
-.member-research { font-size: 0.75rem; color: var(--green-mid); margin-top: 0.3rem; }
-@media (min-width: 680px) { .members-grid { grid-template-columns: repeat(3, 1fr); } }
+.member-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.member-initial { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--green-mid); }
+.member-info { flex: 1; min-width: 0; }
+.member-name { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+.member-role-tag {
+  display: inline-block; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 999px;
+  background: var(--green-pale); color: var(--green-mid); margin-bottom: 0.6rem;
+}
+.member-research { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.35rem; }
+.member-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.2rem; }
+.member-meta span { color: var(--green-mid); }
+.view-more {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.75rem; color: var(--green-mid); margin-top: 0.5rem;
+}
+.empty-state { text-align: center; padding: 4rem 1.5rem; color: var(--text-muted); }
+
+{% assign member_photo = "" %}
+{% macro member_photo_tag member %}
+  {% if member.photo %}
+    {% if member.photo contains '/' %}
+      <img src="{{ member.photo }}" alt="{{ member.name }}">
+    {% else %}
+      <img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
+    {% endif %}
+  {% else %}
+    <div class="member-initial">{{ member.name | slice: 0 }}</div>
+  {% endif %}
+{% endmacro %}
+
+@media (min-width: 680px) {
+  .members-grid { grid-template-columns: repeat(2, 1fr); }
+  .member-photo-wrap { width: 80px; height: 100px; }
+}
 </style>
 
 <div class="page-hero">
@@ -45,14 +79,17 @@ title: Members
     <div class="members-grid">
       {% for member in professors %}
       <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
-        <div class="member-avatar">
-          {% if member.photo %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
-          {% else %}{{ member.name | slice: 0 }}{% endif %}
+        <div class="member-photo-wrap">
+          {% if member.photo %}{% if member.photo contains '/' %}<img src="{{ member.photo }}" alt="{{ member.name }}">{% else %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">{% endif %}{% else %}<div class="member-initial">{{ member.name | slice: 0 }}</div>{% endif %}
         </div>
-        <div>
+        <div class="member-info">
           <div class="member-name">{{ member.name }}</div>
           <div class="member-role-tag">{{ member.role }}</div>
           {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+          {% if member.email %}<div class="member-meta">✉ <span>{{ member.email }}</span></div>{% endif %}
+          {% if member.office %}<div class="member-meta">📍 {{ member.office }}</div>{% endif %}
+          {% if member.phone %}<div class="member-meta">📞 {{ member.phone }}</div>{% endif %}
+          <div class="view-more">상세 보기 →</div>
         </div>
       </a>
       {% endfor %}
@@ -69,14 +106,15 @@ title: Members
     <div class="members-grid">
       {% for member in grads %}
       <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
-        <div class="member-avatar">
-          {% if member.photo %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
-          {% else %}{{ member.name | slice: 0 }}{% endif %}
+        <div class="member-photo-wrap">
+          {% if member.photo %}{% if member.photo contains '/' %}<img src="{{ member.photo }}" alt="{{ member.name }}">{% else %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">{% endif %}{% else %}<div class="member-initial">{{ member.name | slice: 0 }}</div>{% endif %}
         </div>
-        <div>
+        <div class="member-info">
           <div class="member-name">{{ member.name }}</div>
           <div class="member-role-tag">{{ member.role }}</div>
           {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+          {% if member.email %}<div class="member-meta">✉ <span>{{ member.email }}</span></div>{% endif %}
+          <div class="view-more">상세 보기 →</div>
         </div>
       </a>
       {% endfor %}
@@ -91,18 +129,23 @@ title: Members
     <div class="members-grid">
       {% for member in undergrads %}
       <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
-        <div class="member-avatar">
-          {% if member.photo %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
-          {% else %}{{ member.name | slice: 0 }}{% endif %}
+        <div class="member-photo-wrap">
+          {% if member.photo %}{% if member.photo contains '/' %}<img src="{{ member.photo }}" alt="{{ member.name }}">{% else %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">{% endif %}{% else %}<div class="member-initial">{{ member.name | slice: 0 }}</div>{% endif %}
         </div>
-        <div>
+        <div class="member-info">
           <div class="member-name">{{ member.name }}</div>
           <div class="member-role-tag">{{ member.role }}</div>
           {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+          {% if member.email %}<div class="member-meta">✉ <span>{{ member.email }}</span></div>{% endif %}
+          <div class="view-more">상세 보기 →</div>
         </div>
       </a>
       {% endfor %}
     </div>
   </div>
+  {% endif %}
+
+  {% if sorted_members.size == 0 %}
+  <div class="empty-state">아직 등록된 멤버가 없습니다.</div>
   {% endif %}
 </div>
