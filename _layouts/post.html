@@ -25,44 +25,272 @@ layout: default
   <div class="post-category">{{ page.category | default: "공지" }}</div>
   <div class="post-meta">{{ page.date | date: "%Y년 %m월 %d일" }}</div>
   <h1 class="post-title">{{ page.title }}</h1>
-  {% if page.image %}
-  {% assign hero_src = page.image | strip %}
-  {% assign hero_first_char = hero_src | slice: 0 %}
-  {% unless hero_src contains '://' %}
-    {% if hero_first_char == '/' %}
-      {% unless hero_src contains site.baseurl %}
-        {% assign hero_src = site.baseurl | append: hero_src %}
-      {% endunless %}
-    {% else %}
-      {% assign hero_src = site.baseurl | append: '/assets/images/gallery/' | append: hero_src %}
-    {% endif %}
-  {% endunless %}
-  <img src="{{ hero_src }}" alt="{{ page.title }}" style="width:100%; border-radius:12px; margin-bottom:1rem;">
-  {% endif %}
+  <style>
+  .post-carousel {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto 2rem;
+  }
   
-  {% if page.images %}
-  <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; margin-bottom:1.5rem;">
-  {% assign images_list = page.images %}
-  {% if page.images contains ',' %}
-    {% assign images_list = page.images | split: ',' %}
-  {% endif %}
-  {% for img in images_list %}
-  {% assign img_src = img.image | default: img | strip %}
-  {% if img_src != '' %}
-    {% assign img_first_char = img_src | slice: 0 %}
-    {% unless img_src contains '://' %}
-      {% if img_first_char == '/' %}
-        {% unless img_src contains site.baseurl %}
-          {% assign img_src = site.baseurl | append: img_src %}
+  .post-carousel-main {
+    position: relative;
+    width: 100%;
+  }
+  
+  .post-carousel-slide {
+    display: none;
+    width: 100%;
+    max-height: 620px;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  
+  .post-carousel-slide.active {
+    display: block;
+  }
+  
+  .post-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: rgba(255, 255, 255, 0.75);
+    color: #555;
+    font-size: 34px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+  }
+  
+  .post-carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+  }
+  
+  .post-carousel-prev {
+    left: -56px;
+  }
+  
+  .post-carousel-next {
+    right: -56px;
+  }
+  
+  .post-carousel-thumbs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-top: 1.2rem;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .post-carousel-thumb {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 68px;
+    padding: 0;
+    border: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .post-carousel-thumb.active {
+    border-color: #e85b2a;
+  }
+  
+  .post-carousel-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 900px) {
+    .post-carousel-prev {
+      left: 8px;
+    }
+  
+    .post-carousel-next {
+      right: 8px;
+    }
+  }
+  </style>
+  
+  {% if page.image or page.images %}
+  <div class="post-carousel" data-carousel>
+  
+    <div class="post-carousel-main">
+      <button type="button" class="post-carousel-btn post-carousel-prev" data-carousel-prev aria-label="이전 이미지">‹</button>
+  
+      {% assign slide_index = 0 %}
+  
+      {% if page.image %}
+        {% assign hero_src = page.image | strip %}
+        {% assign hero_first_char = hero_src | slice: 0 %}
+  
+        {% unless hero_src contains '://' %}
+          {% if hero_first_char == '/' %}
+            {% unless hero_src contains site.baseurl %}
+              {% assign hero_src = site.baseurl | append: hero_src %}
+            {% endunless %}
+          {% elsif hero_src contains '/' %}
+            {% assign hero_src = site.baseurl | append: '/' | append: hero_src %}
+          {% else %}
+            {% assign hero_src = site.baseurl | append: '/assets/images/gallery/' | append: hero_src %}
+          {% endif %}
         {% endunless %}
-      {% else %}
-        {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: img_src %}
+  
+        <img class="post-carousel-slide active" src="{{ hero_src }}" alt="{{ page.title | escape }}">
+        {% assign slide_index = slide_index | plus: 1 %}
       {% endif %}
-    {% endunless %}
-    <img src="{{ img_src }}" alt="{{ page.title }}" style="width:100%; border-radius:10px; aspect-ratio:4/3; object-fit:cover;">
-  {% endif %}
-  {% endfor %}
+  
+      {% if page.images %}
+        {% assign images_list = page.images %}
+        {% if page.images contains ',' %}
+          {% assign images_list = page.images | split: ',' %}
+        {% endif %}
+  
+        {% for img in images_list %}
+          {% assign img_src = img.image | default: img | strip %}
+  
+          {% if img_src != '' %}
+            {% assign img_first_char = img_src | slice: 0 %}
+  
+            {% unless img_src contains '://' %}
+              {% if img_first_char == '/' %}
+                {% unless img_src contains site.baseurl %}
+                  {% assign img_src = site.baseurl | append: img_src %}
+                {% endunless %}
+              {% elsif img_src contains '/' %}
+                {% assign img_src = site.baseurl | append: '/' | append: img_src %}
+              {% else %}
+                {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: img_src %}
+              {% endif %}
+            {% endunless %}
+  
+            <img class="post-carousel-slide{% if slide_index == 0 %} active{% endif %}" src="{{ img_src }}" alt="{{ page.title | escape }}">
+            {% assign slide_index = slide_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+  
+      <button type="button" class="post-carousel-btn post-carousel-next" data-carousel-next aria-label="다음 이미지">›</button>
+    </div>
+  
+    <div class="post-carousel-thumbs">
+      {% assign thumb_index = 0 %}
+  
+      {% if page.image %}
+        {% assign thumb_src = page.image | strip %}
+        {% assign thumb_first_char = thumb_src | slice: 0 %}
+  
+        {% unless thumb_src contains '://' %}
+          {% if thumb_first_char == '/' %}
+            {% unless thumb_src contains site.baseurl %}
+              {% assign thumb_src = site.baseurl | append: thumb_src %}
+            {% endunless %}
+          {% elsif thumb_src contains '/' %}
+            {% assign thumb_src = site.baseurl | append: '/' | append: thumb_src %}
+          {% else %}
+            {% assign thumb_src = site.baseurl | append: '/assets/images/gallery/' | append: thumb_src %}
+          {% endif %}
+        {% endunless %}
+  
+        <button type="button" class="post-carousel-thumb active" data-carousel-thumb>
+          <img src="{{ thumb_src }}" alt="{{ page.title | escape }}">
+        </button>
+        {% assign thumb_index = thumb_index | plus: 1 %}
+      {% endif %}
+  
+      {% if page.images %}
+        {% assign images_list = page.images %}
+        {% if page.images contains ',' %}
+          {% assign images_list = page.images | split: ',' %}
+        {% endif %}
+  
+        {% for img in images_list %}
+          {% assign thumb_src = img.image | default: img | strip %}
+  
+          {% if thumb_src != '' %}
+            {% assign thumb_first_char = thumb_src | slice: 0 %}
+  
+            {% unless thumb_src contains '://' %}
+              {% if thumb_first_char == '/' %}
+                {% unless thumb_src contains site.baseurl %}
+                  {% assign thumb_src = site.baseurl | append: thumb_src %}
+                {% endunless %}
+              {% elsif thumb_src contains '/' %}
+                {% assign thumb_src = site.baseurl | append: '/' | append: thumb_src %}
+              {% else %}
+                {% assign thumb_src = site.baseurl | append: '/assets/images/gallery/' | append: thumb_src %}
+              {% endif %}
+            {% endunless %}
+  
+            <button type="button" class="post-carousel-thumb{% if thumb_index == 0 %} active{% endif %}" data-carousel-thumb>
+              <img src="{{ thumb_src }}" alt="{{ page.title | escape }}">
+            </button>
+            {% assign thumb_index = thumb_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  
   </div>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-carousel]").forEach(function (carousel) {
+      const slides = Array.from(carousel.querySelectorAll(".post-carousel-slide"));
+      const thumbs = Array.from(carousel.querySelectorAll("[data-carousel-thumb]"));
+      const prevBtn = carousel.querySelector("[data-carousel-prev]");
+      const nextBtn = carousel.querySelector("[data-carousel-next]");
+  
+      let currentIndex = 0;
+  
+      function showSlide(index) {
+        if (slides.length === 0) return;
+  
+        currentIndex = (index + slides.length) % slides.length;
+  
+        slides.forEach(function (slide, i) {
+          slide.classList.toggle("active", i === currentIndex);
+        });
+  
+        thumbs.forEach(function (thumb, i) {
+          thumb.classList.toggle("active", i === currentIndex);
+        });
+      }
+  
+      if (slides.length <= 1) {
+        if (prevBtn) prevBtn.style.display = "none";
+        if (nextBtn) nextBtn.style.display = "none";
+        const thumbsArea = carousel.querySelector(".post-carousel-thumbs");
+        if (thumbsArea) thumbsArea.style.display = "none";
+        return;
+      }
+  
+      if (prevBtn) {
+        prevBtn.addEventListener("click", function () {
+          showSlide(currentIndex - 1);
+        });
+      }
+  
+      if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+          showSlide(currentIndex + 1);
+        });
+      }
+  
+      thumbs.forEach(function (thumb, index) {
+        thumb.addEventListener("click", function () {
+          showSlide(index);
+        });
+      });
+    });
+  });
+  </script>
   {% endif %}
   <div class="post-body">{{ content }}</div>
 </div>
