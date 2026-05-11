@@ -81,9 +81,8 @@ title: Gallery
     {% endif %}
 
     {% if item.images %}
-    {% assign images_list = item.images | split: ',' %}
     {% for extra_img in images_list %}
-    {% assign extra_src = extra_img | strip %}
+    {% assign extra_src = extra_img %}
     {% unless extra_src contains '/' %}
       {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
     {% endunless %}
