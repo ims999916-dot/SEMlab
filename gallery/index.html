@@ -69,12 +69,12 @@ title: Gallery
   <div class="gallery-grid">
     {% for item in gallery_posts %}
     {% if item.image %}
-    <div class="gallery-item fade-up" onclick="openLightbox('{{ site.baseurl }}/assets/images/gallery/{{ item.image }}')">
-      {% if item.image contains '/' %}
-      <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
-      {% else %}
-      <img src="{{ site.baseurl }}/assets/images/gallery/{{ item.image }}" alt="{{ item.title }}" loading="lazy">
-      {% endif %}
+    {% assign img_src = item.image %}
+    {% unless item.image contains '/' %}
+      {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: item.image %}
+    {% endunless %}
+    <div class="gallery-item fade-up" onclick="openLightbox('{{ img_src }}')">
+      <img src="{{ img_src }}" alt="{{ item.title }}" loading="lazy">
       <div class="gallery-caption">
         <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
         {{ item.title }}
