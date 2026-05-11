@@ -26,13 +26,41 @@ layout: default
   <div class="post-meta">{{ page.date | date: "%Y년 %m월 %d일" }}</div>
   <h1 class="post-title">{{ page.title }}</h1>
   {% if page.image %}
-  <img src="{{ page.image }}" alt="{{ page.title }}" style="width:100%; border-radius:12px; margin-bottom:1rem;">
+  {% assign hero_src = page.image | strip %}
+  {% assign hero_first_char = hero_src | slice: 0 %}
+  {% unless hero_src contains '://' %}
+    {% if hero_first_char == '/' %}
+      {% unless hero_src contains site.baseurl %}
+        {% assign hero_src = site.baseurl | append: hero_src %}
+      {% endunless %}
+    {% else %}
+      {% assign hero_src = site.baseurl | append: '/assets/images/gallery/' | append: hero_src %}
+    {% endif %}
+  {% endunless %}
+  <img src="{{ hero_src }}" alt="{{ page.title }}" style="width:100%; border-radius:12px; margin-bottom:1rem;">
   {% endif %}
+  
   {% if page.images %}
   <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; margin-bottom:1.5rem;">
+  {% assign images_list = page.images %}
+  {% if page.images contains ',' %}
+    {% assign images_list = page.images | split: ',' %}
+  {% endif %}
   {% for img in images_list %}
-  {% assign img_src = img %}
-  <img src="{{ img_src }}" alt="{{ page.title }}" style="width:100%; border-radius:10px; aspect-ratio:4/3; object-fit:cover;">
+  {% assign img_src = img.image | default: img | strip %}
+  {% if img_src != '' %}
+    {% assign img_first_char = img_src | slice: 0 %}
+    {% unless img_src contains '://' %}
+      {% if img_first_char == '/' %}
+        {% unless img_src contains site.baseurl %}
+          {% assign img_src = site.baseurl | append: img_src %}
+        {% endunless %}
+      {% else %}
+        {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: img_src %}
+      {% endif %}
+    {% endunless %}
+    <img src="{{ img_src }}" alt="{{ page.title }}" style="width:100%; border-radius:10px; aspect-ratio:4/3; object-fit:cover;">
+  {% endif %}
   {% endfor %}
   </div>
   {% endif %}
