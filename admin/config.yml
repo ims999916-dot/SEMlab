@@ -21,7 +21,7 @@ collections:
         name: "category"
         widget: "select"
         options: ["공지", "활동", "수상", "갤러리", "기타"]
-      - { label: "대표 이미지 (갤러리용)", name: "image", widget: "image", required: false }
+      - { label: "대표 이미지 (갤러리용)", name: "image", widget: "image", required: false, media_folder: "/assets/images/gallery", public_folder: "/assets/images/gallery" }
       - { label: "내용", name: "body", widget: "markdown" }
 
   - name: "members"
