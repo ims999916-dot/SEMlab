@@ -82,10 +82,11 @@ title: Gallery
     </div>
     {% endif %}
     {% if item.images %}
-    {% for img in item.images %}
-    {% assign extra_src = img.image %}
-    {% unless img.image contains '/' %}
-      {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: img.image %}
+    {% assign images_list = item.images | split: ',' %}
+    {% for img in images_list %}
+    {% assign extra_src = img | strip %}
+    {% unless extra_src contains '/' %}
+      {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
     {% endunless %}
     <div class="gallery-item fade-up" onclick="openLightbox('{{ extra_src }}')">
       <img src="{{ extra_src }}" alt="{{ item.title }}">
