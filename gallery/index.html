@@ -70,7 +70,11 @@ title: Gallery
     {% for item in gallery_posts %}
     {% if item.image %}
     <div class="gallery-item fade-up" onclick="openLightbox('{{ site.baseurl }}/assets/images/gallery/{{ item.image }}')">
+      {% if item.image contains '/' %}
+      <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+      {% else %}
       <img src="{{ site.baseurl }}/assets/images/gallery/{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+      {% endif %}
       <div class="gallery-caption">
         <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
         {{ item.title }}
