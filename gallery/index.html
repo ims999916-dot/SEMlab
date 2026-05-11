@@ -212,14 +212,75 @@ title: Gallery
 </div>
 
 <script>
-function openLightbox(src) {
-  document.getElementById('lightboxImg').src = src;
+<script>
+let currentLightboxImages = [];
+let currentLightboxIndex = 0;
+
+function openGalleryGroup(groupId) {
+  const dataEl = document.getElementById('gallery-data-' + groupId);
+
+  if (!dataEl) return;
+
+  try {
+    currentLightboxImages = JSON.parse(dataEl.textContent);
+  } catch (e) {
+    currentLightboxImages = [];
+  }
+
+  if (!currentLightboxImages.length) return;
+
+  currentLightboxIndex = 0;
+  showLightboxImage(currentLightboxIndex);
+
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  updateLightboxButtons();
 }
+
+function showLightboxImage(index) {
+  if (!currentLightboxImages.length) return;
+
+  currentLightboxIndex = (index + currentLightboxImages.length) % currentLightboxImages.length;
+
+  document.getElementById('lightboxImg').src = currentLightboxImages[currentLightboxIndex];
+
+  updateLightboxButtons();
+}
+
+function updateLightboxButtons() {
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+
+  if (currentLightboxImages.length <= 1) {
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+  } else {
+    prevBtn.style.display = 'block';
+    nextBtn.style.display = 'block';
+  }
+}
+
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+document.getElementById('lightbox').addEventListener('click', function () {
+  closeLightbox();
+});
+
+document.getElementById('lightboxImg').addEventListener('click', function (event) {
+  event.stopPropagation();
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closeLightbox();
+
+  if (document.getElementById('lightbox').classList.contains('open')) {
+    if (e.key === 'ArrowLeft') showLightboxImage(currentLightboxIndex - 1);
+    if (e.key === 'ArrowRight') showLightboxImage(currentLightboxIndex + 1);
+  }
+});
+</script>
 </script>
