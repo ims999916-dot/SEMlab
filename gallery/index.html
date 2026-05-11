@@ -69,7 +69,9 @@ title: Gallery
   <div class="gallery-grid">
     {% for item in gallery_posts %}
     {% if item.image %}
-    {% assign img_src = item.image %}
+    {% assign img_src = item.image | split: ',' %}
+    {% for img in images_list %}
+    {% assign extra_src = img | strip %}
     {% unless item.image contains '/' %}
       {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: item.image %}
     {% endunless %}
@@ -97,7 +99,6 @@ title: Gallery
     </div>
     {% endfor %}
     {% endif %}
-    {% endfor %}
   </div>
   {% else %}
   <div class="empty-state">아직 등록된 사진이 없습니다.</div>
