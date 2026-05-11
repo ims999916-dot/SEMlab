@@ -61,12 +61,50 @@ title: Gallery
 </div>
 
 <div class="main-content">
-  {% assign gallery_posts = site.posts | where: "category", "갤러리" %}
-  {% if gallery_posts.size > 0 %}
+  {% assign gallery_count = 0 %}
+  
   <div class="gallery-grid">
-    {% for item in gallery_posts %}
-
-    {% if item.image %}
+    {% for item in site.posts %}
+      {% if item.image or item.images %}
+        {% assign gallery_count = gallery_count | plus: 1 %}
+  
+        {% assign first_img = item.image %}
+  
+        {% unless first_img %}
+          {% if item.images %}
+            {% assign first_item = item.images | first %}
+            {% assign first_img = first_item.image | default: first_item %}
+          {% endif %}
+        {% endunless %}
+  
+        {% assign thumb_src = first_img | strip %}
+        {% assign thumb_first_char = thumb_src | slice: 0 %}
+  
+        {% unless thumb_src contains '://' %}
+          {% if thumb_first_char == '/' %}
+            {% unless thumb_src contains site.baseurl %}
+              {% assign thumb_src = site.baseurl | append: thumb_src %}
+            {% endunless %}
+          {% elsif thumb_src contains '/' %}
+            {% assign thumb_src = site.baseurl | append: '/' | append: thumb_src %}
+          {% else %}
+            {% assign thumb_src = site.baseurl | append: '/assets/images/gallery/' | append: thumb_src %}
+          {% endif %}
+        {% endunless %}
+  
+        <div class="gallery-item fade-up" onclick="openGalleryGroup({{ forloop.index0 }})">
+          <img src="{{ thumb_src }}" alt="{{ item.title | escape }}">
+          <div class="gallery-caption">
+            <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
+            {{ item.title }}
+          </div>
+        </div>
+  
+        <script type="application/json" id="gallery-data-{{ forloop.index0 }}">
+  [
+  {% assign printed = false %}
+  
+  {% if item.image %}
     {% assign img_src = item.image | strip %}
     {% assign img_first_char = img_src | slice: 0 %}
     {% unless img_src contains '://' %}
@@ -74,51 +112,55 @@ title: Gallery
         {% unless img_src contains site.baseurl %}
           {% assign img_src = site.baseurl | append: img_src %}
         {% endunless %}
+      {% elsif img_src contains '/' %}
+        {% assign img_src = site.baseurl | append: '/' | append: img_src %}
       {% else %}
         {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: img_src %}
       {% endif %}
     {% endunless %}
-    <div class="gallery-item fade-up" onclick="openLightbox('{{ img_src }}')">
-      <img src="{{ img_src }}" alt="{{ item.title }}">
-      <div class="gallery-caption">
-        <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
-        {{ item.title }}
-      </div>
-    </div>
-    {% endif %}
-
-    {% if item.images %}
+    "{{ img_src }}"
+    {% assign printed = true %}
+  {% endif %}
+  
+  {% if item.images %}
     {% assign images_list = item.images %}
     {% if item.images contains ',' %}
       {% assign images_list = item.images | split: ',' %}
     {% endif %}
-    {% for extra_img in images_list %}
-    {% assign extra_src = extra_img.image | default: extra_img | strip %}
-    {% if extra_src != '' %}
-      {% assign extra_first_char = extra_src | slice: 0 %}
-      {% unless extra_src contains '://' %}
-        {% if extra_first_char == '/' %}
-          {% unless extra_src contains site.baseurl %}
-            {% assign extra_src = site.baseurl | append: extra_src %}
-          {% endunless %}
-        {% else %}
-          {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
-        {% endif %}
-      {% endunless %}
-      <div class="gallery-item fade-up" onclick="openLightbox('{{ extra_src }}')">
-        <img src="{{ extra_src }}" alt="{{ item.title }}">
-        <div class="gallery-caption">
-          <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
-          {{ item.title }}
-        </div>
-      </div>
-    {% endif %}
+  
+    {% for img in images_list %}
+      {% assign extra_src = img.image | default: img | strip %}
+  
+      {% if extra_src != '' %}
+        {% assign extra_first_char = extra_src | slice: 0 %}
+  
+        {% unless extra_src contains '://' %}
+          {% if extra_first_char == '/' %}
+            {% unless extra_src contains site.baseurl %}
+              {% assign extra_src = site.baseurl | append: extra_src %}
+            {% endunless %}
+          {% elsif extra_src contains '/' %}
+            {% assign extra_src = site.baseurl | append: '/' | append: extra_src %}
+          {% else %}
+            {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
+          {% endif %}
+        {% endunless %}
+  
+        {% if printed %},{% endif %}
+        "{{ extra_src }}"
+        {% assign printed = true %}
+      {% endif %}
     {% endfor %}
-    {% endif %}
+  {% endif %}
+  ]
+        </script>
+  
+      {% endif %}
     {% endfor %}
   </div>
-  {% else %}
-  <div class="empty-state">아직 등록된 사진이 없습니다.</div>
+  
+  {% if gallery_count == 0 %}
+    <div class="empty-state">아직 등록된 사진이 없습니다.</div>
   {% endif %}
 </div>
 
