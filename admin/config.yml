@@ -22,16 +22,6 @@ collections:
         widget: "select"
         options: ["공지", "활동", "수상", "갤러리", "기타"]
       - { label: "대표 이미지 (갤러리용)", name: "image", widget: "image", required: false, media_folder: "/assets/images/gallery", public_folder: "/SEMlab/assets/images/gallery" }
-      - label: "추가 사진 (여러 장)"
-        name: "images"
-        widget: "list"
-        required: false
-        field:
-          label: "사진"
-          name: "image"
-          widget: "image"
-          media_folder: "/assets/images/gallery"
-          public_folder: "/SEMlab/assets/images/gallery"
       - { label: "내용", name: "body", widget: "markdown" }
 
   - name: "members"
