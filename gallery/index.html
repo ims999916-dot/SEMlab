@@ -74,7 +74,7 @@ title: Gallery
       {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: item.image %}
     {% endunless %}
     <div class="gallery-item fade-up" onclick="openLightbox('{{ img_src }}')">
-      <img src="{{ img_src }}" alt="{{ item.title }}" loading="lazy">
+      <img src="{{ img_src }}" alt="{{ item.title }}">
       <div class="gallery-caption">
         <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
         {{ item.title }}
