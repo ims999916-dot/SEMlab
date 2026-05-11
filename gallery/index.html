@@ -164,9 +164,14 @@ title: Gallery
   {% endif %}
 </div>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+
+  <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); showLightboxImage(currentLightboxIndex - 1);">‹</button>
+
   <img id="lightboxImg" src="" alt="">
+
+  <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); showLightboxImage(currentLightboxIndex + 1);">›</button>
 </div>
 
 <script>
