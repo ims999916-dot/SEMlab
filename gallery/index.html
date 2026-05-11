@@ -67,9 +67,16 @@ title: Gallery
     {% for item in gallery_posts %}
 
     {% if item.image %}
-    {% assign img_src = item.image %}
-    {% unless item.image contains '/' %}
-      {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: item.image %}
+    {% assign img_src = item.image | strip %}
+    {% assign img_first_char = img_src | slice: 0 %}
+    {% unless img_src contains '://' %}
+      {% if img_first_char == '/' %}
+        {% unless img_src contains site.baseurl %}
+          {% assign img_src = site.baseurl | append: img_src %}
+        {% endunless %}
+      {% else %}
+        {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: img_src %}
+      {% endif %}
     {% endunless %}
     <div class="gallery-item fade-up" onclick="openLightbox('{{ img_src }}')">
       <img src="{{ img_src }}" alt="{{ item.title }}">
@@ -81,21 +88,33 @@ title: Gallery
     {% endif %}
 
     {% if item.images %}
+    {% assign images_list = item.images %}
+    {% if item.images contains ',' %}
+      {% assign images_list = item.images | split: ',' %}
+    {% endif %}
     {% for extra_img in images_list %}
-    {% assign extra_src = extra_img %}
-    {% unless extra_src contains '/' %}
-      {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
-    {% endunless %}
-    <div class="gallery-item fade-up" onclick="openLightbox('{{ extra_src }}')">
-      <img src="{{ extra_src }}" alt="{{ item.title }}">
-      <div class="gallery-caption">
-        <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
-        {{ item.title }}
+    {% assign extra_src = extra_img.image | default: extra_img | strip %}
+    {% if extra_src != '' %}
+      {% assign extra_first_char = extra_src | slice: 0 %}
+      {% unless extra_src contains '://' %}
+        {% if extra_first_char == '/' %}
+          {% unless extra_src contains site.baseurl %}
+            {% assign extra_src = site.baseurl | append: extra_src %}
+          {% endunless %}
+        {% else %}
+          {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
+        {% endif %}
+      {% endunless %}
+      <div class="gallery-item fade-up" onclick="openLightbox('{{ extra_src }}')">
+        <img src="{{ extra_src }}" alt="{{ item.title }}">
+        <div class="gallery-caption">
+          <div class="gallery-date">{{ item.date | date: "%Y.%m.%d" }}</div>
+          {{ item.title }}
+        </div>
       </div>
-    </div>
+    {% endif %}
     {% endfor %}
     {% endif %}
-
     {% endfor %}
   </div>
   {% else %}
