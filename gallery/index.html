@@ -32,8 +32,6 @@ title: Gallery
 }
 .gallery-item:hover .gallery-caption { transform: translateY(0); }
 .gallery-date { font-size: 0.65rem; color: rgba(255,255,255,0.65); margin-bottom: 2px; }
-
-/* lightbox */
 .lightbox {
   display: none; position: fixed; inset: 0; z-index: 1000;
   background: rgba(10,61,46,0.92);
@@ -50,7 +48,6 @@ title: Gallery
   border-radius: 50%; background: rgba(255,255,255,0.15);
 }
 .empty-state { text-align: center; padding: 4rem 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
-
 @media (min-width: 680px) {
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
@@ -68,10 +65,9 @@ title: Gallery
   {% if gallery_posts.size > 0 %}
   <div class="gallery-grid">
     {% for item in gallery_posts %}
+
     {% if item.image %}
-    {% assign img_src = item.image | split: ',' %}
-    {% for img in images_list %}
-    {% assign extra_src = img | strip %}
+    {% assign img_src = item.image %}
     {% unless item.image contains '/' %}
       {% assign img_src = site.baseurl | append: '/assets/images/gallery/' | append: item.image %}
     {% endunless %}
@@ -83,10 +79,11 @@ title: Gallery
       </div>
     </div>
     {% endif %}
+
     {% if item.images %}
     {% assign images_list = item.images | split: ',' %}
-    {% for img in images_list %}
-    {% assign extra_src = img | strip %}
+    {% for extra_img in images_list %}
+    {% assign extra_src = extra_img | strip %}
     {% unless extra_src contains '/' %}
       {% assign extra_src = site.baseurl | append: '/assets/images/gallery/' | append: extra_src %}
     {% endunless %}
@@ -99,11 +96,14 @@ title: Gallery
     </div>
     {% endfor %}
     {% endif %}
+
+    {% endfor %}
   </div>
   {% else %}
   <div class="empty-state">아직 등록된 사진이 없습니다.</div>
   {% endif %}
 </div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightboxImg" src="" alt="">
