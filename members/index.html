@@ -109,24 +109,40 @@ title: Members
   </div>
   {% endif %}
 
-  {% assign undergrads = sorted_members | where: "role", "학부연구생" %}
-  {% if undergrads.size > 0 %}
+  {% assign has_undergrads = false %}
+  {% for member in sorted_members %}
+    {% if member.role contains "학부" %}
+      {% assign has_undergrads = true %}
+    {% endif %}
+  {% endfor %}
+  
+  {% if has_undergrads %}
   <div class="role-section fade-up">
     <div class="role-title">Undergraduate Researchers</div>
     <div class="members-grid">
-      {% for member in undergrads %}
-      <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
-        <div class="member-photo-wrap">
-          {% if member.photo %}{% if member.photo contains '/' %}<img src="{{ member.photo }}" alt="{{ member.name }}">{% else %}<img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">{% endif %}{% else %}<div class="member-initial">{{ member.name | slice: 0 }}</div>{% endif %}
-        </div>
-        <div class="member-info">
-          <div class="member-name">{{ member.name }}</div>
-          <div class="member-role-tag">{{ member.role }}</div>
-          {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
-          {% if member.email %}<div class="member-meta">✉ <span>{{ member.email }}</span></div>{% endif %}
-          <div class="view-more">상세 보기 →</div>
-        </div>
-      </a>
+      {% for member in sorted_members %}
+        {% if member.role contains "학부" %}
+        <a href="{{ site.baseurl }}{{ member.url }}" class="member-card">
+          <div class="member-photo-wrap">
+            {% if member.photo %}
+              {% if member.photo contains '/' %}
+                <img src="{{ member.photo }}" alt="{{ member.name }}">
+              {% else %}
+                <img src="{{ site.baseurl }}/assets/images/members/{{ member.photo }}" alt="{{ member.name }}">
+              {% endif %}
+            {% else %}
+              <div class="member-initial">{{ member.name | slice: 0 }}</div>
+            {% endif %}
+          </div>
+          <div class="member-info">
+            <div class="member-name">{{ member.name }}</div>
+            <div class="member-role-tag">{{ member.role }}</div>
+            {% if member.research %}<div class="member-research">{{ member.research }}</div>{% endif %}
+            {% if member.email %}<div class="member-meta">✉ <span>{{ member.email }}</span></div>{% endif %}
+            <div class="view-more">상세 보기 →</div>
+          </div>
+        </a>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
