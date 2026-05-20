@@ -84,7 +84,7 @@ body {
   display: block;
   width: 22px;
   height: 2px;
-  background: #fff;
+  background: var(--green-dark);
   margin: 4px 0;
   border-radius: 2px;
   transition: 0.3s;
@@ -193,8 +193,16 @@ body {
 }
 
 @media (max-width: 640px) {
+  .nav-inner { height: 58px; padding: 0 1.1rem; }
+  .nav-logo img { height: 34px !important; }
   .nav-links { display: none; }
   .nav-hamburger { display: block; }
+  .mobile-menu { position: absolute; top: 58px; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); box-shadow: 0 14px 30px rgba(0,0,0,0.08); padding: 0.4rem 1.1rem 0.6rem; }
+  .mobile-menu.open { display: block; }
+  .mobile-menu a { color: var(--text); font-size: 0.92rem; font-weight: 500; padding: 0.85rem 0.2rem; border-bottom: 1px solid var(--border); }
+  .mobile-menu a.active { color: var(--green-mid); font-weight: 700; }
+  .mobile-menu a:last-child { border-bottom: none; }
 }
 </style>
 </head>
@@ -234,6 +242,11 @@ body {
 <script>
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
+  document.querySelectorAll('#mobileMenu a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.remove('open');
+    });
+  });
 }
 // 현재 페이지 메뉴 활성화
 document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
