@@ -255,15 +255,16 @@ document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
   if (a.href === location.href) a.classList.add('active');
 });
 // 스크롤 애니메이션
-const obs = new IntersectionObserver((entries) => {
+const semlabObserver = new IntersectionObserver((entries) => {
   entries.forEach((e,i) => {
     if (e.isIntersecting) {
       setTimeout(() => e.target.classList.add('visible'), i * 80);
-      obs.unobserve(e.target);
+      semlabObserver.unobserve(e.target);
     }
   });
 }, { threshold: 0.08 });
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+document.querySelectorAll('.fade-up').forEach(el => semlabObserver.observe(el));
 </script>
 </body>
 </html>
