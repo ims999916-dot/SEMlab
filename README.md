@@ -120,3 +120,129 @@
 ## 8. 문의
 
 홈페이지 관련 문의: 2568602@pcu.ac.kr
+
+## 협약업체 추가 방법
+
+홈페이지 메인 화면의 **협력 기업** 섹션은 `index.html` 파일에서 관리합니다.
+
+수정할 파일:
+
+```txt
+index.html
+```
+
+로고 파일 업로드 위치:
+
+```txt
+assets/images/
+```
+
+---
+
+### 1. 협약업체 로고 업로드
+
+먼저 협약업체 로고 이미지를 아래 폴더에 업로드합니다.
+
+```txt
+assets/images/
+```
+
+예시:
+
+```txt
+assets/images/company-logo.png
+```
+
+파일명은 가능하면 영어, 숫자, 하이픈 조합을 권장합니다.
+
+좋은 예:
+
+```txt
+dy-logo.png
+company-logo.png
+ev-partner-logo.png
+```
+
+피하는 것이 좋은 예:
+
+```txt
+협약업체 로고.png
+새 로고 (1).png
+KakaoTalk_이미지.png
+```
+
+한글, 공백, 괄호가 들어간 파일명은 GitHub Pages에서 경로 문제가 생길 수 있으므로 가능하면 피하는 것이 좋습니다.
+
+---
+
+### 2. `index.html`에서 협력 기업 섹션 찾기
+
+`index.html`에서 아래 주석을 찾습니다.
+
+```html
+<!-- 협력업체 -->
+```
+
+그 아래에 있는 `partners-grid` 영역 안에 협약업체 카드를 추가합니다.
+
+기본 구조:
+
+```html
+<div class="partners-grid fade-up">
+
+  <!-- 기존 협약업체 카드 -->
+
+</div>
+```
+
+---
+
+### 3. 협약업체 카드 추가
+
+아래 코드를 복사해서 `partners-grid` 안에 붙여넣고, 업체 홈페이지 주소, 로고 파일명, 업체명을 수정합니다.
+
+```html
+<!-- 업체명 -->
+<a href="업체 홈페이지 주소" target="_blank" rel="noopener" class="partner-card">
+  <img src="{{ site.baseurl }}/assets/images/로고파일명.png" alt="업체명" class="partner-logo">
+  <div class="partner-name">업체명</div>
+</a>
+```
+
+예시:
+
+```html
+<!-- ABC모빌리티 -->
+<a href="https://abc.com" target="_blank" rel="noopener" class="partner-card">
+  <img src="{{ site.baseurl }}/assets/images/abc-logo.png" alt="ABC모빌리티" class="partner-logo">
+  <div class="partner-name">ABC모빌리티</div>
+</a>
+```
+
+---
+
+### 4. 홈페이지 주소가 없는 경우
+
+업체 홈페이지가 없는 경우에는 클릭되지 않는 카드 형태로 추가할 수 있습니다.
+
+```html
+<!-- 업체명 -->
+<div class="partner-card">
+  <img src="{{ site.baseurl }}/assets/images/company-logo.png" alt="업체명" class="partner-logo">
+  <div class="partner-name">업체명</div>
+</div>
+```
+
+---
+
+### 5. 수정 후 반영 방법
+
+수정이 끝나면 아래 순서대로 반영합니다.
+
+```txt
+1. 변경한 파일 commit
+2. GitHub Actions 배포 완료 대기
+3. 홈페이지에서 Ctrl + F5로 강력 새로고침
+```
+
+협력 기업 섹션은 PC에서는 가로 카드 형태로 표시되고, 모바일에서는 한 줄에 하나씩 세로로 정렬됩니다.
