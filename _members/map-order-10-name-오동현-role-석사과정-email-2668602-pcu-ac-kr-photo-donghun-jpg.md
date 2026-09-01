@@ -5,3 +5,7 @@ email: 2668602@pcu.ac.kr
 photo: donghun.jpg
 order: 5
 ---
+#### 학력사항
+
+* 배재대학교 석사과정
+* 배재대학교 학사
