@@ -9,11 +9,9 @@ order: 7
 
 • 배재대학교 석사과정 
 
-• Master's degree in Automation and Industrial Computing | University of Science and Technology Oran Mohamed Boudiaf, Oran, Algeria.
+• Master's degree in Automation and Industrial Computing, University of Science and Technology Oran Mohamed Boudiaf, Oran, Algeria.
 
-• Bachelor's degree in Automation | University of Science and Technology Oran Mohamed Boudiaf, Oran, Algeria.
-
-
+• Bachelor's degree in Automation, University of Science and Technology Oran Mohamed Boudiaf, Oran, Algeria.
 
 논문: 
 
