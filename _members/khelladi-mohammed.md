@@ -1,5 +1,5 @@
 ---
-name: KHELLADI Mohammed
+name: "Khelladi Mohammed "
 role: 석사과정
 email: "2668605@pcu.ac.kr "
 photo: mohammed.jpg
